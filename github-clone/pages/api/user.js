@@ -8,6 +8,7 @@ const api = axios.create({
 export default async (req, res) => {
   const {username} = req.query;
   
+  //Basic user data request
   const userResponse = await api.get(`/users/${username}`);
   
   const {
@@ -23,10 +24,26 @@ export default async (req, res) => {
     following,
   } = userResponse.data;
 
+  //Stars count request
   const starsResponse = await api.get(`/users/${username}/starred`);
-
   const stars_count = starsResponse.data.length;
 
+  // Pinned repositories request
+  const reposResponse = await api.get(`/users/${username}/repos`);
+  let pinnedRepos = [];
+  for(let i = 0; i < 6; i++){
+    const { name, description, language, stargazers_count } = reposResponse.data[i];
+    const newObj = {
+      name, 
+      description, 
+      language, 
+      stargazers_count
+    }
+
+    pinnedRepos.push(newObj);
+  }
+
+  //Response return
   return res.json({
       avatar_url,
       name,
@@ -39,5 +56,6 @@ export default async (req, res) => {
       twitter_username,
       public_repos,
       stars_count,
+      pinnedRepos,
   });
 }
