@@ -1,25 +1,20 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import api from '../../utils/api';
+import axios from 'axios';
 
 export const getStaticProps: GetStaticProps = async context => {
     const username = context.params.username;
 
-    api.get(`/users/${username}`)
-        .then(res => {
-            console.log(res.data);
+    const api = axios.create({
+    baseURL: 'http://localhost:3000/api/'
+    })
 
-            const formatedData = {
-                login: res.data.login,
-                name: res.data.name,
-                avatar: res.data.avatar_url,
+    const response = await api.get(`/user/?username=${username}`)
 
-            }
-        })
+    const data = response.data;
 
     return {
-        props: {
-            a: 1
-        }
+        props: data
     }
 }
 
@@ -27,12 +22,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
     return {
         paths: [
             {params: {username: 'eduardo-ehsc'}},
+            {params: {username: 'gianni-lab'}},
             {params: {username: 'edu'}}
         ],
         fallback: false
     }
 }
 
-export default function Username(props){
-    return <h1>Username {props.a}</h1>
+export default function Username({avatar_url, name, login, bio, followers, following, location, blog, twitter_username, public_repos, stars_count, pinnedRepos}){
+    return (
+        <>
+            
+        </>
+    )
 }
