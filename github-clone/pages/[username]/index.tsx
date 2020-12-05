@@ -59,6 +59,42 @@ export default function Username({avatar_url, name, login, bio, followers, follo
                     </div>
                 </div>
             </header>
+
+            <main className={styles.content}>
+                <div className={styles.user}>
+                    <div className={styles.user_image}>
+                        <img src={avatar_url} alt={name} className={styles.avatar}/>
+                        <div><img src="/smile.svg" alt=""/></div>
+                    </div>
+                    <h1 className={styles.name}>{name}</h1>
+                    <p className={styles.login}>{login}</p>
+                    <span className={styles.bio}>{bio}</span>
+                    <button className={styles.editBtn}>Edit profile</button>
+                    <div className={styles.follow}>
+                        <img src="/users.svg" alt="Followers"/>
+                        <span>{followers} followers</span>
+                        •
+                        <span>{following} following</span>
+                        •
+                        <img src="/star.svg" alt="Stars"/>
+                        <span>{stars_count}</span>
+                    </div>
+
+                    <div className={styles.location}>
+                        <img src="/map-pin.svg" alt="" className={styles.dist}/>
+                        <p>{location}</p>
+                    </div>
+                    <div className={styles.blog}>
+                        <img src="/link.svg" alt="" className={styles.dist}/>
+                        <p>{blog}</p>
+                    </div>
+                    <div className={styles.location}>
+                        <img src="/twitter.svg" alt="" className={styles.dist}/>
+                        <p>@{twitter_username}</p>
+                    </div>
+                </div>
+                <div className="tabs"></div>
+            </main>
         </>
     )
 }
